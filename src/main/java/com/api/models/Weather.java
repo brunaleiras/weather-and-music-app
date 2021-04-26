@@ -18,7 +18,8 @@ public class Weather implements Serializable {
 	private double lon;
 	private String name;
 	private double lat;
-	
+	private double temp;
+
 	@Bean
 	public Weather weather() {
 		return new Weather();
@@ -35,6 +36,11 @@ public class Weather implements Serializable {
 	@JsonProperty("lon")
 	public void setLon(double lon) {
 		this.lon = lon;
+	}
+
+	@JsonProperty("main")
+	public void setMain(Map<String, Object> main) {
+		setTemp((double) main.get("temp"));
 	}
 
 	@JsonProperty("coord")
@@ -80,5 +86,10 @@ public class Weather implements Serializable {
 	public double getLon() {
 		return lon;
 	}
+
+	public double getTemp() { return temp; }
+
+	public void setTemp(double temp) { this.temp = temp; }
+
 
 }

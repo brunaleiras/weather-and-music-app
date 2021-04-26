@@ -44,18 +44,21 @@ public class WeatherController {
         return allWeatherResults;
     }
 
-
-    @GetMapping(value = "/weather", produces = "application/json")
-    public com.api.models.Weather getWeather() throws IOException{
+    @GetMapping(value = "/temperature/{city}", produces = "application/json")
+    public com.api.models.Weather getWeather(@PathVariable(value = "city") String city) throws IOException{
         UriComponents uriComponents = UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
                 .host(URL_OPEN_WEATHER)
                 .path("")
                 .query("q={keyword}&appid={appid}")
-                .buildAndExpand("Rio de Janeiro",APP_ID_OPEN_WEATHER);
+                .buildAndExpand(city,APP_ID_OPEN_WEATHER);
 
         String uri = uriComponents.toUriString();
+
+        System.out.println("-----------------------------------------------");
+        System.out.println(uri);
+        System.out.println("-----------------------------------------------");
 
         ResponseEntity<String> resp = restTemplate.exchange(uri, HttpMethod.GET, null, String.class);
 
