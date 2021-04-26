@@ -1,6 +1,6 @@
 package com.api.repository;
 
-import com.api.models.Weather;
+import com.api.entities.Weather;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 

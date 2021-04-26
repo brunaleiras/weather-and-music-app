@@ -1,43 +1,84 @@
 package com.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
-//import lombok.Data;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.context.annotation.Bean;
 
-@Entity
-@Table(name="TB_WEATHER")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Weather implements Serializable {
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Column(name = "id", updatable = false, nullable = false)
-    private UUID id;
 
+	private static final long serialVersionUID = 7406210628182440902L;
+	
+	private String weatherDescription;
+	private double lon;
+	private String name;
+	private double lat;
+	
+	@Bean
+	public Weather weather() {
+		return new Weather();
+	}
+	
+	public Weather() {
+		super();
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public Weather(Weather weather) {
+		// TODO Auto-generated constructor stub
+	}
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+	@JsonProperty("lon")
+	public void setLon(double lon) {
+		this.lon = lon;
+	}
 
-    private String nome;
+	@JsonProperty("coord")
+	public void setCoord(Map<String, Object> coord) {
+		setLon((double) coord.get("lon"));
+		setLat((double) coord.get("lat"));
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public double getLat() {
+		return lat;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	@JsonProperty("lat")
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	
+	public String getName() {
+		return name;
+	}
+	
+	@JsonProperty("name")
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getWeatherDescription() {
+		return weatherDescription;
+	}
+
+	public void setWeatherDescription(String weatherDescription) {
+		this.weatherDescription = weatherDescription;
+	}
+
+	@JsonProperty("weather")
+	public void setWeather(List<Map<String, Object>> weatherEntries) {
+		Map<String, Object> weather = weatherEntries.get(0);
+		setWeatherDescription((String) weather.get("description"));
+	}
+
+	@JsonProperty("lon")
+	public double getLon() {
+		return lon;
+	}
+
 }

@@ -11,7 +11,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 @ComponentScan({"com.api.controllers"})
-@EntityScan("com.api.models")
+@EntityScan("com.api.entities")
 @EnableJpaRepositories("com.api.repository")
 @EnableSwagger2
 public class ApirestApplication implements WebMvcConfigurer {
